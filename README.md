@@ -1,6 +1,6 @@
 ![logo](https://github.com/Redwars22/lynx/blob/main/LYNX%20LOGO.png?raw=true)
 
-Lynx is an experimental project created by AndrewNation for a programming language that can be transpilled to JavaScript. The goal is to create an alternative language to JavaScript, easier to learn for newbies and people who already know and use JS everyday. In the future, a Lynx to C++ transpiller will be written.
+Lynx is an experimental project created by AndrewNation for a programming language that can be transpilled to JavaScript. The goal is to create an alternative language to JavaScript, easier to learn for newbies and people who already know and use JS every day. In the future, a Lynx to C++ transpiler will be written.
 
 Goals:
 - Easier to learn for JS users
@@ -39,3 +39,4 @@ Please run `node lynxt.js input output` to transpile Lynx code to JavaScript. Th
 You can also run the interactive Lynx interpreter by running `node lynxt.js` without any argument.
 
 # Learn Lynx
+[Click here to read Lynx documentation](/spec)
