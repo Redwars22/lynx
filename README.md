@@ -37,3 +37,5 @@ io.print(CircleArea(2.8));
 Please run `node lynxt.js input output` to transpile Lynx code to JavaScript. The first argument is the input file and the last one is the output file (the result of the transpilation to JS).
 
 You can also run the interactive Lynx interpreter by running `node lynxt.js` without any argument.
+
+# Learn Lynx
