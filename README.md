@@ -39,4 +39,4 @@ Please run `node lynxt.js input output` to transpile Lynx code to JavaScript. Th
 You can also run the interactive Lynx interpreter by running `node lynxt.js` without any argument.
 
 # Learn Lynx
-[Click here to read Lynx documentation](/spec)
+[Click here to read Lynx documentation](./spec)
