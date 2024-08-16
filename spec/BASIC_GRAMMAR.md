@@ -55,3 +55,4 @@
 | “” | string |
 | ‘’ | character |
 | . | access a property of an object or represents a floating point |
+| <> | type casting |

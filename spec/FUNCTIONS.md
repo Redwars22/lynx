@@ -4,10 +4,10 @@ You can define a function and/or a procedure with the `fun` keyword followed by 
 
 ## #️⃣ RETURN VALUES
 
-Functions can return values to be used elsewhere. One example is a function that calculates the Einstein’s formula `E=m.c²` and returns its result to be stored in a variable. They can return a value by using the `ret` keyword followed by the value you want to return. Optionally, you can define which type of value the function will return. 
+Functions can return values to be used elsewhere. One example is a function that calculates the Einstein’s formula `E=m.c²` and returns its result to be stored in a variable. They can return a value by using the `ret` keyword followed by the value you want to return.
 
 ```tsx
-fun getEnergy(mass, lightSpeed):double {
+fun getEnergy(mass, lightSpeed) {
 	ret mass * math.pow(lightSpeed, 2);
 }
 ```
@@ -15,7 +15,7 @@ fun getEnergy(mass, lightSpeed):double {
 You can also have procedures, where no value is returned. Using `ret` without a return value will simply jump out of the procedure.
 
 ```tsx
-fun alert(msg:str) {
+fun alert(msg) {
 	ret;
 }
 ```

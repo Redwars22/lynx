@@ -1,6 +1,6 @@
 # 🔣 TYPES
 
-Type annotation is optional. If left out, it will be automatically inferred.
+Types in Lynx are inferred, just like in JavaScript. The possible types are:
 
 | Type | Equivalent in C | Description |
 | --- | --- | --- |
@@ -22,5 +22,5 @@ let y = "1"
 x = <int>(x)
 y = <int>(y)
 
-io.print(x + y);
+std.print(x + y);
 ```

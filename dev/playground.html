@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lynx Programming Language - Online Playground</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+</head>
+
+<body>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=ZCOOL+QingKe+HuangYou&display=swap");
+
+        body {
+            background-color: rgb(2, 38, 78);
+            margin: 0px;
+        }
+
+        h1 {
+            font-size: 25px;
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+        header,
+        .horizontal-row,
+        nav,
+        .logo-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .logo-container {
+            gap: 15px;
+            align-items: center;
+        }
+
+        nav {
+            gap: 15px;
+        }
+
+        header {
+            padding: 10px;
+            align-items: center;
+            color: white;
+            gap: 30px;
+        }
+
+        .code-editor,
+        .output {
+            background-color: rgb(1, 15, 31);
+            height: 88vh;
+            width: 50vw;
+            font-family: "Share Tech Mono", monospace;
+            font-size: 19px;
+            font-weight: 900;
+            padding: 20px;
+            color: rgb(226, 226, 226);
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+
+        .code-editor {
+            border-right: 1px solid rgba(6, 101, 179, 0.37);
+        }
+
+        .run {
+            position: absolute;
+            font-size: 25px;
+            right: 25px;
+            bottom: 25px;
+        }
+    </style>
+    <header>
+        <div class="logo-container">
+            <img src="https://cdn3.iconfinder.com/data/icons/animals-1-1/512/20-256.png"
+                height="50px" width="50px" />
+            <h1 class="titanium-logo-text">LYNX</h1>
+        </div>
+        <nav>
+            <a class="btn btn-primary">Language
+                Reference</a>
+            <a class="btn btn-primary">GitHub</a>
+            <a class="btn btn-primary">Download Lynx</a>
+        </nav>
+    </header>
+    <main>
+        <div class="horizontal-row">
+            <div contenteditable="" class="code-editor"></div>
+            <div class="output console errors-log"></div>
+        </div>
+        <button class="run btn btn-success" onclick="runCode()">
+            <i class="bi bi-play-fill"></i>
+        </button>
+    </main>
+    <script>var exports = {};</script>
+    <script type="text/javascript" src="lyn2_web.js"></script>
+    <script type="text/javascript" src="stdlib_web.js"></script>
+</body>
+
+</html>
