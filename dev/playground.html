@@ -67,6 +67,8 @@
 
         .code-editor {
             border-right: 1px solid rgba(6, 101, 179, 0.37);
+            background-color: rgba(0, 0, 0, 0.602);;
+            color: white;
         }
 
         .run {
@@ -92,9 +94,7 @@
     <main>
         <div class="horizontal-row">
             <!--<div contenteditable="" class="code-editor"></div>-->
-            <div id="editor" class="code-editor">
-                std.print("Hello world!");
-            </div>
+            <div id="editor" class="code-editor">std.print("Hello world!");</div>
             <div class="output console errors-log"></div>
         </div>
         <button class="run btn btn-success" onclick="runCode()">
@@ -102,12 +102,13 @@
         </button>
     </main>
 
-    <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.4/ace.js" integrity="sha512-ADBQV64rzhFIJkiHBan+9UeZRq3DZrP6/S2+FS2EX5icsYw/IQgmFaSmt6UTqZpWXkpCKluztsTpOtxx5GkD2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/github");
+    editor.session.setMode("ace/mode/javascript");
+</script>
     <script>var exports = {};</script>
     <script type="text/javascript" src="lyn2_web.js"></script>
     <script type="text/javascript" src="stdlib_web.js"></script>
