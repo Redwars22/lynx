@@ -6,11 +6,16 @@
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 */
+var classRules = {
+    METHOD_CALL: /[a-zA-Z0-9]*\.{1}[a-zA-Z0-9]*\(.*\)[;]?/gm,
+    CONSTRUCTOR: "",
+    METHOD: /[a-z0-9_]+\([a-z0-9_ ,]*\)/gm,
+};
 var rules = {
     FUNCTION_CALL: /[a-z0-9_]+\([a-z0-9_]*\)[;]?/gm,
     INC_DEC_STATEMENT: /.*[a-zA-Z_0-9].{2}[-+]?(;)/gm,
     INC_DEC_STATEMENT_PRE: /.{2}[-+].*[a-zA-Z_0-9]?(;)/gm,
-    //CLASSES: classRules,
+    CLASSES: classRules,
     NUMBER: /[0-9.]+/gm,
     IDENTIFIER: /[0-9a-z_A-Z]+/gm,
     ASSIGN_STATEMENT: /.*( )?=( )?.*(;)?/gm
@@ -131,6 +136,10 @@ function runCode() {
                         _lineTok[tok].value = "return";
                     }
                 }
+                if (_lineTok[tok].value.includes(symbols.OBJECT_PROP_OR_METHOD) &&
+                    _lineTok[tok].value.includes(keywords.OBJ_THIS_INSTANCE)) {
+                    _lineTok[tok].value = _lineTok[tok].value.replace(keywords.OBJ_THIS_INSTANCE, "this");
+                }
                 lineTokens.push(_lineTok[tok].value);
             }
             JSTree.push(lineTokens);
@@ -161,6 +170,6 @@ function runCode() {
         eval(JSTree.join("\n"));
     }
     catch (e) {
-        console.error(e);
+        document.querySelector(".console").innerText = err;
     }
 }

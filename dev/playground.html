@@ -91,13 +91,23 @@
     </header>
     <main>
         <div class="horizontal-row">
-            <div contenteditable="" class="code-editor">std.print("Hello world!")</div>
+            <!--<div contenteditable="" class="code-editor"></div>-->
+            <div id="editor" class="code-editor">
+                std.print("Hello world!");
+            </div>
             <div class="output console errors-log"></div>
         </div>
         <button class="run btn btn-success" onclick="runCode()">
             <i class="bi bi-play-fill"></i>
         </button>
     </main>
+
+    <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
     <script>var exports = {};</script>
     <script type="text/javascript" src="lyn2_web.js"></script>
     <script type="text/javascript" src="stdlib_web.js"></script>
