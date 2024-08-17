@@ -1,5 +1,7 @@
 ![logo](https://github.com/Redwars22/lynx/blob/main/LYNX%20LOGO.png?raw=true)
 
+[▶️ YOU CAN TRY LYNX OUT HERE](https://redwars22.github.io/lynx/dev/playground.html)
+
 Lynx is an experimental project created by AndrewNation for a programming language that can be transpilled to JavaScript. The goal is to create an alternative language to JavaScript, easier to learn for newbies and people who already know and use JS every day. In the future, a Lynx to C++ transpiler will be written.
 
 Goals:
