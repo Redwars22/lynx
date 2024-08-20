@@ -6,12 +6,14 @@
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 */
-var classRules = {
+
+const classRules = {
     METHOD_CALL: /[a-zA-Z0-9]*\.{1}[a-zA-Z0-9]*\(.*\)[;]?/gm,
     CONSTRUCTOR: "",
     METHOD: /[a-z0-9_]+\([a-z0-9_ ,]*\)/gm,
 };
-var rules = {
+
+const rules = {
     FUNCTION_CALL: /[a-z0-9_]+\([a-z0-9_]*\)[;]?/gm,
     INC_DEC_STATEMENT: /.*[a-zA-Z_0-9].{2}[-+]?(;)/gm,
     INC_DEC_STATEMENT_PRE: /.{2}[-+].*[a-zA-Z_0-9]?(;)/gm,
@@ -20,35 +22,46 @@ var rules = {
     IDENTIFIER: /[0-9a-z_A-Z]+/gm,
     ASSIGN_STATEMENT: /.*( )?=( )?.*(;)?/gm
 };
-var TOKEN_TYPES = {
+
+type TToken = string;
+
+const TOKEN_TYPES = {
     "IDENTIFIER": "Identifier",
     "ASSIGNMENT": "Assignment",
     "KEYWORD": "ReservedKeyword",
     "SYMBOL_OP": "SymbolAndOperator"
-};
-function getTokenKind(token) {
-    var _tok = token.trim();
+}
+
+function getTokenKind(token: TToken) {
+    const _tok = token.trim();
     /*if(token.trim() == keywords.DEC_VAR_KEYWD)
         return TOKEN_TYPES.VarDeclStatement*/
-    for (var keyword in keywords) {
+
+    for (let keyword in keywords) {
         if (_tok == keywords[keyword])
-            return TOKEN_TYPES.KEYWORD;
+            return TOKEN_TYPES.KEYWORD
     }
-    for (var symbol in symbols) {
+
+    for (let symbol in symbols) {
         if (_tok == symbols[symbol])
-            return TOKEN_TYPES.SYMBOL_OP;
+            return TOKEN_TYPES.SYMBOL_OP
     }
+
     if (_tok.match(rules.IDENTIFIER))
-        return TOKEN_TYPES.IDENTIFIER;
-    if (_tok == "")
-        return "Whitespace";
+        return TOKEN_TYPES.IDENTIFIER
+
+    if (_tok == "") return "Whitespace"
+
     /*
     if(_tok.trim().includes(symbols.ASSIGN))
         return TOKEN_TYPES.ASSIGNMENT*/
-    return undefined;
+
+    return undefined
 }
-var code = [];
-var keywords = {
+
+let code: string[] = [];
+
+const keywords = {
     DEC_VAR_KEYWD: "let",
     DEC_CONST_KEYWD: "const",
     DECL_CONST_ALT_KEYWD: "def",
@@ -69,7 +82,8 @@ var keywords = {
     CONTINUE_KEYWD: "jump",
     EXTENDS_KEYD: "extends"
 };
-var symbols = {
+
+const symbols = {
     SINGL_LINE_COMMENT: "//",
     SINGL_LINE_COMMENT_ALT: "#",
     MULT_LINE_COMMENT_BEGIN: "/*",
@@ -84,99 +98,118 @@ var symbols = {
     OBJECT_PROP_OR_METHOD: ".",
     HASHTAG: "#"
 };
-var std = {
-    print: function (arg) {
+
+const std = {
+    print: (arg) => {
         document.querySelector(".console").innerText = document.querySelector(".console").innerText + arg;
     },
-    printLn: function (arg) {
+    printLn: (arg) => {
         document.querySelector(".console").innerText = document.querySelector(".console").innerText + arg + "\n";
     },
-    input: function () {
-        var val = prompt("Insert a value");
+    input: () => {
+        const val = prompt("Insert a value");
         return val;
     },
-    readInt: function () {
-    	var val = prompt("Insert a value");
-        return parseInt(val);
-    },
-    readDouble: function () {
-
-    },
-    clear: function () {
+    clear: () => {
         document.querySelector(".console").innerText = "";
     }
-};
+}
+
 function runCode() {
-    var _a;
     try {
-        var data = (_a = document.querySelector(".code-editor")) === null || _a === void 0 ? void 0 : _a.innerText;
-        console.log(data);
-        code = data === null || data === void 0 ? void 0 : data.split("\n");
-        var tokensTree = [];
-        var JSTree = [];
+        const data = document.querySelector(".code-editor")?.innerText;
+        console.log(data)
+        code = data?.split("\n") as string[];
+
+        interface IToken {
+            kind: string;
+            value: any;
+        }
+
+        let tokensTree = [] as IToken[][];
+        let JSTree = [];
+
         //Init the std library
         //JSTree.push([stdl[0].split("\n")])
-        for (var i = 0; i < (code === null || code === void 0 ? void 0 : code.length); i++) {
-            var line = [];
-            var _tokens = code[i].trim().split(" ");
-            for (var j = 0; j < _tokens.length; j++) {
+
+        for (let i = 0; i < code?.length; i++) {
+            let line = [];
+            let _tokens = code[i].trim().split(" ");
+            for (let j = 0; j < _tokens.length; j++) {
                 line.push({ "kind": getTokenKind(_tokens[j]), "value": _tokens[j] });
             }
+
             tokensTree.push(line);
         }
-        for (var i = 0; i < tokensTree.length; i++) {
-            var lineTokens = [];
-            var _lineTok = tokensTree[i];
-            for (var tok = 0; tok < _lineTok.length; tok++) {
+
+        for (let i = 0; i < tokensTree.length; i++) {
+            let lineTokens: string[] = [];
+            let _lineTok = tokensTree[i];
+
+            for (let tok = 0; tok < _lineTok.length; tok++) {
                 if (_lineTok[tok].kind == TOKEN_TYPES.KEYWORD) {
                     if (_lineTok[tok].value == keywords.IF_KEYWD) {
                         _lineTok[tok].value = "if";
                     }
                 }
+
                 if (_lineTok[tok].kind == TOKEN_TYPES.KEYWORD) {
                     if (_lineTok[tok].value == keywords.FUNC_DECL) {
                         _lineTok[tok].value = "function";
                     }
                 }
+
                 if (_lineTok[tok].kind == TOKEN_TYPES.KEYWORD) {
                     if (_lineTok[tok].value == keywords.FUNC_RET_KEYWD) {
                         _lineTok[tok].value = "return";
                     }
                 }
-                if (_lineTok[tok].value.includes(symbols.OBJECT_PROP_OR_METHOD) &&
-                    _lineTok[tok].value.includes(keywords.OBJ_THIS_INSTANCE)) {
+
+                if (
+                    _lineTok[tok].value.includes(symbols.OBJECT_PROP_OR_METHOD) &&
+                    _lineTok[tok].value.includes(keywords.OBJ_THIS_INSTANCE)
+                ) {
                     _lineTok[tok].value = _lineTok[tok].value.replace(keywords.OBJ_THIS_INSTANCE, "this");
                 }
-                lineTokens.push(_lineTok[tok].value);
+
+                lineTokens.push(_lineTok[tok].value)
             }
+
             JSTree.push(lineTokens);
         }
-        for (var line = 0; line < JSTree.length; line++) {
+
+        for (let line = 0; line < JSTree.length; line++) {
             //Transform before joining to string
             if (JSTree[line][0] == keywords.IF_KEYWD) {
-                var ifExprLine = [];
+                const ifExprLine = [];
+
                 ifExprLine.push(JSTree[line][0]);
                 ifExprLine.push(symbols.OPENING_PARENTHESIS);
-                for (var _tok = 1; _tok < JSTree[line].length; _tok++) {
+
+                for (let _tok = 1; _tok < JSTree[line].length; _tok++) {
                     if (_tok == JSTree[line].length - 1)
-                        if (JSTree[line][_tok] == symbols.OPENING_CURLY_BRACKET) {
+                        if (
+                            JSTree[line][_tok] == symbols.OPENING_CURLY_BRACKET
+                        ) {
+                            ifExprLine.push(symbols.CLOSING_PARENTHESIS)
+                            ifExprLine.push(symbols.OPENING_CURLY_BRACKET)
+                            break;
+                        } else {
                             ifExprLine.push(symbols.CLOSING_PARENTHESIS);
-                            ifExprLine.push(symbols.OPENING_CURLY_BRACKET);
                             break;
                         }
-                        else {
-                            ifExprLine.push(symbols.CLOSING_PARENTHESIS);
-                            break;
-                        }
+
                     ifExprLine.push(JSTree[line][_tok]);
                 }
+
                 JSTree[line] = ifExprLine;
             }
+
             JSTree[line] = JSTree[line].join(" ");
         }
+
         eval(JSTree.join("\n"));
-    }
-    catch (e) {
+    } catch (e) {
         document.querySelector(".console").innerText = err;
     }
 }

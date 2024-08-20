@@ -26,27 +26,10 @@ To call a function anywhere in your code, you can use this syntax: `function()` 
 
 ## 🔧 PARAMETERS
 
-Functions can and will often receive parameters. They are defined either with or without type annotation. They can be made optional by adding the `?` symbol following the identifier. A default value can also be defined by using the `=` assigning symbol. In the case of `searchUser(id = "null", email?)`, if `id` is not passed to the function, it will automatically receive the string value “null”. `email` is marked as an optional parameter.
-
-*With type annotations:*
+Functions can and will often receive parameters. A default value can also be defined by using the `=` assigning symbol. In the case of `searchUser(email, id = "null")`, if `id` is not passed to the function, it will automatically receive the string value “null”.
 
 ```tsx
-fun searchUser(id:str = "null", email?:str):TUser {
-	if email or not id == "null" {
-		const user:TUser = database.search(id, email);
-		ret user;
-	}
-	
-	ret DEFAULT_USER;
-}
-
-searchUser(id);
-```
-
-*Without type annotations (implicit type inference):*
-
-```tsx
-fun searchUser(id == "null", email?) {
+fun searchUser(email, id = "null") {
 	if email or not id == "null" {
 		const user = database.search(id, email);
 		ret user;
@@ -55,6 +38,6 @@ fun searchUser(id == "null", email?) {
 	ret DEFAULT_USER;
 }
 
-searchUser(id);
+searchUser(email);
 ```
 

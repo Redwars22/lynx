@@ -22,13 +22,13 @@ There are some built-in methods for arrays too:
 | Methods | Description |
 | --- | --- |
 | push(element) | pushes an element to the end of the array |
-| length():int | returns the length of an array |
+| length() | returns the length of an array |
 | pop() | removes the last element from an array  |
 
 ```tsx
 let arr = [0, 1, 2, 3, 4, 5]
 
 arr.push(6);
-io.print("length: " + arr.length);
-io.print("array: " + arr);
+std.print("length: " + arr.length);
+std.print("array: " + arr);
 ```
