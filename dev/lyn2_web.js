@@ -177,6 +177,6 @@ function runCode() {
         eval(JSTree.join("\n"));
     }
     catch (e) {
-        document.querySelector(".console").innerText = err;
+        document.querySelector(".console").innerText = e;
     }
 }
