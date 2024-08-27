@@ -82,7 +82,8 @@ var symbols = {
     OPENING_PARENTHESIS: "(",
     CLOSING_PARENTHESIS: ")",
     OBJECT_PROP_OR_METHOD: ".",
-    HASHTAG: "#"
+    HASHTAG: "#",
+    AND_OP: "&&"
 };
 var std = {
     print: function (arg) {
@@ -95,21 +96,29 @@ var std = {
         var val = prompt("Insert a value");
         return val;
     },
-    readInt: function () {
-    	var val = prompt("Insert a value");
+    nextString: function () {
+        var val = prompt("Insert a value");
+        return val;
+    },
+    nextInt: function () {
+        var val = prompt("Insert a value");
         return parseInt(val);
     },
-    readDouble: function () {
-
+    nextDouble: function () {
+        var val = prompt("Insert a value");
+        return val;
+    },
+    nextFloat: function () {
+        var val = prompt("Insert a value");
+        return parseFloat(val);
     },
     clear: function () {
         document.querySelector(".console").innerText = "";
     }
 };
 function runCode() {
-    var _a;
     try {
-        var data = (_a = document.querySelector(".code-editor")) === null || _a === void 0 ? void 0 : _a.innerText;
+        var data = document.querySelector(".ace_content").innerText;
         console.log(data);
         code = data === null || data === void 0 ? void 0 : data.split("\n");
         var tokensTree = [];
@@ -143,6 +152,11 @@ function runCode() {
                         _lineTok[tok].value = "return";
                     }
                 }
+                if (_lineTok[tok].kind == TOKEN_TYPES.KEYWORD) {
+                    if (_lineTok[tok].value == keywords.AND_OP_KEYWD) {
+                        _lineTok[tok].value = symbols.AND_OP;
+                    }
+                }
                 if (_lineTok[tok].value.includes(symbols.OBJECT_PROP_OR_METHOD) &&
                     _lineTok[tok].value.includes(keywords.OBJ_THIS_INSTANCE)) {
                     _lineTok[tok].value = _lineTok[tok].value.replace(keywords.OBJ_THIS_INSTANCE, "this");
@@ -153,7 +167,22 @@ function runCode() {
         }
         for (var line = 0; line < JSTree.length; line++) {
             //Transform before joining to string
-            if (JSTree[line][0] == keywords.IF_KEYWD) {
+            console.log(JSTree[line]);
+            if (JSTree[line][0] == "#" + keywords.DECL_CONST_ALT_KEYWD) {
+                if (JSTree[line][1] && JSTree[line][2]) {
+                    var _const = {
+                        identifier: JSTree[line][1],
+                        value: JSTree[line][2]
+                    };
+                    console.log(_const);
+                    JSTree[line] = [keywords.DEC_CONST_KEYWD, _const.identifier, symbols.ASSIGN, _const.value].join(" ");
+                }
+                else
+                    throw ("Arguments missing in constant definition");
+                continue;
+            }
+            if (JSTree[line][0] == keywords.IF_KEYWD ||
+                JSTree[line][0] == keywords.WHILE_KEYWD) {
                 var ifExprLine = [];
                 ifExprLine.push(JSTree[line][0]);
                 ifExprLine.push(symbols.OPENING_PARENTHESIS);
@@ -176,7 +205,7 @@ function runCode() {
         }
         eval(JSTree.join("\n"));
     }
-    catch (e) {
-        document.querySelector(".console").innerText = e;
+    catch (err) {
+        document.querySelector(".console").innerText = err;
     }
 }
